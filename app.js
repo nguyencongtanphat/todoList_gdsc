@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const userRoutes = require("./src/routes/UserRoute");
 //------setup dependencies
 require("dotenv").config();
 //set up mongoose
@@ -22,8 +23,5 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
+app.use("/user", userRoutes);
 module.exports = app;
