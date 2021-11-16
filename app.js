@@ -3,6 +3,13 @@ const app = express();
 const userRoutes = require("./src/routes/UserRoute");
 const siteRoutes = require("./src/routes/SiteRoute");
 //------setup dependencies
+//set up body parser
+const bodyParser = require("body-parser");
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
+
 require("dotenv").config();
 //set up mongoose
 const mongoose = require("mongoose");
