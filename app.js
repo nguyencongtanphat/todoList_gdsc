@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const userRoutes = require("./src/routes/UserRoute");
+const siteRoutes = require("./src/routes/SiteRoute");
 //------setup dependencies
 require("dotenv").config();
 //set up mongoose
@@ -23,5 +24,7 @@ app.use(
   })
 );
 
+app.use("/", siteRoutes);
 app.use("/user", userRoutes);
+
 module.exports = app;
