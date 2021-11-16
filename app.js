@@ -1,12 +1,14 @@
 const express = require("express");
 const app = express();
 const userRoutes = require("./src/routes/UserRoute");
+const todosRoutes = require("./src/routes/TodosRoute");
+
 //------setup dependencies
 require("dotenv").config();
 //set up mongoose
 const mongoose = require("mongoose");
 mongoose
-  .connect(process.env.Phat_CONNECT_DB)
+  .connect(process.env.NK_DB_CONNECTION)
   .then((result) => {
     console.log("connect successful");
   })
@@ -24,4 +26,7 @@ app.use(
 );
 
 app.use("/user", userRoutes);
+app.use("/todos", todosRoutes);
 module.exports = app;
+
+
