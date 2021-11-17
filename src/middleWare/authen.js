@@ -7,17 +7,8 @@ const authen = (req, res, next) => {
         req.headers.authorization,
         process.env.PRIVATE_KEY
       );
-      console.log("here");
-      UserModel.findOne({ email: decoded.email }).then((user) => {
-        console.log("1", user);
-        if (user) {
-          req.id = user._id;
-          next();
-        } else {
-          res.status(404).json({ message: "user not found" });
-          next();
-        }
-      });
+      req.id = decoded.id;
+      next();
     } else {
       next();
     }

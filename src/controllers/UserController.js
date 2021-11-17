@@ -20,7 +20,7 @@ const userController = {
           .catch((err) => {
             res
               .status(404)
-              .json({ message: "signup failt because " + err.message });
+              .json({ message: "signup fail because " + err.message });
           });
       })
       .catch((err) => {
@@ -37,7 +37,7 @@ const userController = {
           .then((result) => {
             if (result) {
               const token = jwt.sign(
-                { email: user.email, userName: user.userName },
+                { email: user.email, userName: user.userName, id: user._id },
                 process.env.PRIVATE_KEY,
                 { expiresIn: "1h" }
               );
