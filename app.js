@@ -22,15 +22,6 @@ mongoose
   .catch((err) => {
     console.log("connect failt", err);
   });
-
-mongoose
-  .connect(process.env.NK_DB_CONNECTION)
-  .then((result) => {
-    console.log("connect successful");
-  })
-  .catch((err) => {
-    console.log("connect failt", err);
-  });
 //set up morgan
 const morgan = require("morgan");
 app.use(
@@ -46,6 +37,3 @@ app.use("/user", userRoutes);
 app.use("/todos", todosRoutes);
 
 module.exports = app;
-
-
-
