@@ -3,6 +3,8 @@ const app = express();
 const userRoutes = require("./src/routes/UserRoute");
 const siteRoutes = require("./src/routes/SiteRoute");
 const todosRoutes = require("./src/routes/TodosRoute");
+
+const authenMiddleware = require("./src/middleWare/authen");
 //------setup dependencies
 //set up body parser
 const bodyParser = require("body-parser");
@@ -32,8 +34,7 @@ app.use(
   })
 );
 
-app.use("/", siteRoutes);
 app.use("/user", userRoutes);
-app.use("/todos", todosRoutes);
-
+app.use("/todos", authenMiddleware, todosRoutes);
+app.use("/", authenMiddleware, siteRoutes);
 module.exports = app;
