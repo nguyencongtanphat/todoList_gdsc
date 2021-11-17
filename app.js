@@ -15,7 +15,7 @@ require("dotenv").config();
 //set up mongoose
 const mongoose = require("mongoose");
 mongoose
-  .connect(process.env.Phat_CONNECT_DB)
+  .connect(process.env.NK_DB_CONNECTION)
   .then((result) => {
     console.log("connect successful");
   })
