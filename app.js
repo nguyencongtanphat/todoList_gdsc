@@ -3,6 +3,7 @@ const app = express();
 const userRoutes = require("./src/routes/UserRoute");
 const siteRoutes = require("./src/routes/SiteRoute");
 const todosRoutes = require("./src/routes/TodosRoute");
+const errorHandler = require("./src/middleWare/error/errorHandle");
 
 const authenMiddleware = require("./src/middleWare/authen");
 //------setup dependencies
@@ -37,4 +38,5 @@ app.use(
 app.use("/user", userRoutes);
 app.use("/todos", authenMiddleware, todosRoutes);
 app.use("/", authenMiddleware, siteRoutes);
+app.use("/", errorHandler);
 module.exports = app;
