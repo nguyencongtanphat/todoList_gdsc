@@ -8,10 +8,11 @@ const item_schema = mongoose.Schema({
         type: String,
         required: true
     },
-    status:{
-        type: String,
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
-    }
+    },
 });
 
 module.exports = mongoose.model('item', item_schema);

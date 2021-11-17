@@ -1,11 +1,12 @@
-const item_model = require("../model/Todo");
+const todo_Model = require("../model/Todo");
+const user_Model = require("../model/User");
 
 const todoController = {
     // get all todo items
-    get_all: async (req, res) =>{
+    get_All: async (req, res) =>{
         try{
-            const items = await item_model.find();
-            res.json(items);
+            const todos = await todo_Model.find({userId: req.body.userId});
+            res.json(todos);
         }catch(err) {
             res.json({
                 message: err.message
@@ -14,51 +15,56 @@ const todoController = {
     },
 
     //get a todo item by id
-    get_id: async (req, res, todo_id) =>{
+    get_Id: async (req, res, todo_id) =>{
         try{
-            const todo = await item_model.findById({_id: req.params.todo_id});
-            res.json(todo);
+            const todo = await todo_Model.findById({_id: req.params.todo_id});
+            if(todo.userId == req.body.userId)
+                {res.json(todo);}
+            else
+                {res.json({message: "you are not allowed"});}
         }catch(err){
             res.json({message: err.message});
         }
     },
 
     //post a todo item
-    post: async (req, res) =>{
+    post: (req, res) =>{
         try{
-            const todo = await new item_model(
-                {   title: req.body.title,
-                    description: req.body.description,
-                    status: req.body.status
-                });
-            todo.save()
-            .then( (data) => {res.json( data )});
-        }catch(err){
+            user_Model.findById({_id: req.body.userId}).then((user)=>
+            {
+                if(user) {
+                    const todo = new todo_Model(
+                        {   title: req.body.title,
+                            description: req.body.description,
+                            userId: req.body.userId
+                        });
+                    todo.save()
+                    .then( (data) => {res.json( data )});
+                }
+            })
+        }
+        catch(err){
             res.json({message: err.message});
         }
     },
 
     //delete a todo item
-    delete_todo: async (req, res, todo_id) =>{
+    delete_Todo: async (req, res, todo_id) =>{
         try{
-            const remove_todo = await item_model.remove({_id: req.params.todo_id});
-            res.json(remove_todo);
+            const todo = await todo_Model.findById({ _id: req.params.todo_id});
+            if(todo.userId == req.body.userId)
+            {
+                const removed_Todo = await todo_Model.remove({ _id: req.params.todo_id });
+                res.json(removed_Todo);
+            }
+            else
+            {
+                res.json({message: "you are not allowed"});
+            }
         }catch(err){
             res.json({message: err.message});
         }
     },
-
-    //update status of a todo item
-    patch: async (req, res, todo_id) =>{
-        try{
-            const update_todo = await item_model.updateOne(
-                { _id: req.params.todo_id },
-                { $set: {status: req.body.status} });
-            res.json(update_todo);
-        }catch(err){
-            res.json({message: err.message});
-        };
-    }
 };
 
 module.exports = todoController;
