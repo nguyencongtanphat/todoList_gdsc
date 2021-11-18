@@ -18,7 +18,9 @@ require("dotenv").config();
 //set up mongoose
 const mongoose = require("mongoose");
 mongoose
-  .connect(process.env.CONNECT_DB)
+  .connect(
+    "mongodb+srv://user:user...@todogdsc.nyfcq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  )
   .then((result) => {
     console.log("connect successful");
   })
