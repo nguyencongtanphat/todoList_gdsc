@@ -2,10 +2,7 @@ const jwt = require("jsonwebtoken");
 const authen = (req, res, next) => {
   try {
     if (req.headers.authorization) {
-      const decoded = jwt.verify(
-        req.headers.authorization,
-        process.env.PRIVATE_KEY
-      );
+      const decoded = jwt.verify(req.headers.authorization, "PRIVATEKEY");
       req.body.userId = decoded.id;
       next();
     } else {
