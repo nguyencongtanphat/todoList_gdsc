@@ -21,7 +21,7 @@ const userController = {
           .catch((err) => {
             next(
               ApiError.badRequest(
-                "signup fail because userName or email were used"
+                "signup fail because userName or email were used" + err.message
               )
             );
           });
