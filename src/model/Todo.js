@@ -1,12 +1,11 @@
-const mongoose = require('mongoose'); 
+const mongoose = require("mongoose");
 const item_schema = mongoose.Schema({
     title:{
         type: String,
         required: true
     },
     description:{
-        type: String,
-        required: true
+        type: String
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -15,4 +14,4 @@ const item_schema = mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('item', item_schema);
+module.exports = mongoose.model("item", item_schema);
