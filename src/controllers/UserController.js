@@ -39,7 +39,7 @@ const userController = {
           if (result) {
             const token = jwt.sign(
               { email: user.email, userName: user.userName, id: user._id },
-              process.env.PRIVATE_KEY,
+              "PRIVATEKEY",
               { expiresIn: "1h" }
             );
             res.status(200).json({
