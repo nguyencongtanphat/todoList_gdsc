@@ -7,7 +7,7 @@ const authen = (req, res, next) => {
         req.headers.authorization,
         process.env.PRIVATE_KEY
       );
-      req.id = decoded.id;
+      req.body.userId = decoded.id;
       next();
     } else {
       next();
