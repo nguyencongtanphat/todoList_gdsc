@@ -25,15 +25,6 @@ mongoose
   .catch((err) => {
     console.log("connect failt", err);
   });
-//set up morgan
-const morgan = require("morgan");
-app.use(
-  morgan("dev", {
-    skip: function (req, res) {
-      return res.statusCode < 400;
-    },
-  })
-);
 
 app.use("/user", userRoutes);
 app.use("/todos", authenMiddleware, todosRoutes);
