@@ -1,7 +1,6 @@
 const siteController = {
   getHome: (req, res, next) => {
-    console.log("2");
-    if (req.id) {
+    if (req.body.userId) {
       res.json({
         message: "you can see and post todo list at",
         link: "http://localhost:3000/todos",

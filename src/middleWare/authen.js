@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const UserModel = require("../model/User");
 const authen = (req, res, next) => {
   try {
     if (req.headers.authorization) {
@@ -10,7 +9,7 @@ const authen = (req, res, next) => {
       req.body.userId = decoded.id;
       next();
     } else {
-      next();
+      res.json({ message: "request must attach authorization token" });
     }
   } catch (err) {
     res.status(505).json({ err });
