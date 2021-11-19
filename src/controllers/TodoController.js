@@ -40,8 +40,9 @@ const todoController = {
           console.log("dont have id");
           next(ApiError.badRequest(notAllowedNotification));
         }
+      } else {
+        next(ApiError.badRequest(notAllowedNotification));
       }
-      next(ApiError.badRequest(notAllowedNotification));
     } catch (err) {
       next(ApiError.badRequest(err.message));
     }
