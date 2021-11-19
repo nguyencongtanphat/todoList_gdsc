@@ -29,7 +29,7 @@ const todoController = {
   },
 
   //get a todo item by id
-  get_Id: async (req, res, todo_id) => {
+  get_Id: async (req, res, next) => {
     try {
       if (req.body.userId) {
         console.log("have id");
