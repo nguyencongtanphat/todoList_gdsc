@@ -37,10 +37,10 @@ const todoController = {
         if (todo.userId == req.body.userId) {
           res.json(todo);
         } else {
-          console.log("dont have id");
           next(ApiError.badRequest(notAllowedNotification));
         }
       } else {
+        console.log("dont have id");
         next(ApiError.badRequest(notAllowedNotification));
       }
     } catch (err) {
