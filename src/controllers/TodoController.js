@@ -74,7 +74,6 @@ const todoController = {
       };
     }
   },
-
   //delete a todo item
   delete_Todo: async (req, res, todo_id) => {
     try {

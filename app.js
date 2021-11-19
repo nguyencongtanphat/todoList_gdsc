@@ -22,7 +22,7 @@ app.use(cookieParser());
 const mongoose = require("mongoose");
 mongoose
   .connect(
-    "mongodb+srv://user:user...@todogdsc.nyfcq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    process.env.CONNECT_DB
   )
   .then((result) => {
     console.log("connect successful");

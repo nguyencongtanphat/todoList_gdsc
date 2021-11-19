@@ -3,9 +3,8 @@ const { response } = require("../../app");
 const authen = (req, res, next) => {
   try {
     if (req.cookies.jwt) {
-      console.log("have cookies");
       const token = req.cookies.jwt;
-      const decoded = jwt.verify(token, "PRIVATEKEY");
+      const decoded = jwt.verify(token, process.env.PRIVATE_KEY);
       req.body.userId = decoded.id;
     }
     next();

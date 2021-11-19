@@ -1,12 +1,11 @@
 const UserModel = require("../model/User");
 const bcrypt = require("bcrypt");
-const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const ApiError = require("../middleWare/error/ApiError");
 const userController = {
   signup: (req, res, next) => {
     bcrypt
-      .hash(req.body.password, saltRounds)
+      .hash(req.body.password, process.env.SALT_ROUNDS)
       .then((hash) => {
         const newUser = new UserModel({
           userName: req.body.userName,
@@ -39,10 +38,10 @@ const userController = {
         //check password
         bcrypt.compare(req.body.password, user.password).then((result) => {
           if (result) {
-            const token = jwt.sign({ id: user._id }, "PRIVATEKEY", {
+            const token = jwt.sign({ id: user._id }, process.env.PRIVATE_KEY, {
               expiresIn: "1h",
             });
-            res.cookie("jwt", token, { httpOnly: true, expiresIn: "1h" });
+            res.cookie("jwt", token, { httpOnly: true, maxAge: "1h" });
             res.status(200).json({
               message: "login successfully",
               userInfo: {
