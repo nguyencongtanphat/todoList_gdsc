@@ -32,10 +32,12 @@ const todoController = {
   get_Id: async (req, res, todo_id) => {
     try {
       if (req.body.userId) {
+        console.log("have id");
         const todo = await todo_Model.findById({ _id: req.params.todo_id });
         if (todo.userId == req.body.userId) {
           res.json(todo);
         } else {
+          console.log("dont have id");
           next(ApiError.badRequest(notAllowedNotification));
         }
       }
