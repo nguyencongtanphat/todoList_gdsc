@@ -65,6 +65,17 @@ const userController = {
       }
     });
   },
+  logout: (req, res, next) => {
+    if (req.body.userId) {
+      const token = jwt.sign("PRIVATEKEY", { expiresIn: 1 });
+      res.status(200).json({
+        message: "logout successfully. To see your content please login again",
+        token,
+      });
+    } else {
+      next(ApiError.badRequest("you're  not login so cannot log out"));
+    }
+  },
 };
 
 module.exports = userController;
