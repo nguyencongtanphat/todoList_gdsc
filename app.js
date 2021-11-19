@@ -30,6 +30,6 @@ mongoose
 
 app.use("/user", userRoutes);
 app.use("/todos", authenMiddleware, todosRoutes);
-app.use("/", siteRoutes);
+app.use("/", authenMiddleware, siteRoutes);
 app.use("/", errorHandler);
 module.exports = app;

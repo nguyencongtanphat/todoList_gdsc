@@ -4,10 +4,8 @@ const authen = (req, res, next) => {
     if (req.headers.authorization) {
       const decoded = jwt.verify(req.headers.authorization, "PRIVATEKEY");
       req.body.userId = decoded.id;
-      next();
-    } else {
-      res.json({ message: "request must attach authorization token" });
     }
+    next();
   } catch (err) {
     res.status(505).json({ err });
   }

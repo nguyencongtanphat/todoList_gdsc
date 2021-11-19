@@ -8,16 +8,20 @@ const todoController = {
   // get all todo items
   get_All: async (req, res, next) => {
     try {
-      const todos = await todo_Model.find({ userId: req.body.userId });
-      if (todos.length > 0) {
-        res.json({
-          yourTodos: todos.length,
-          todos: todos,
-        });
+      if (req.body.userId) {
+        const todos = await todo_Model.find({ userId: req.body.userId });
+        if (todos.length > 0) {
+          res.json({
+            yourTodos: todos.length,
+            todos: todos,
+          });
+        } else {
+          res.json({
+            message: "You do not have any todo yet. Let make some note here",
+          });
+        }
       } else {
-        res.json({
-          message: "You do not have any todo yet. Let make some note here",
-        });
+        next(ApiError.badRequest(notAllowedNotification));
       }
     } catch (err) {
       next({});
@@ -27,7 +31,7 @@ const todoController = {
   //get a todo item by id
   get_Id: async (req, res, todo_id) => {
     try {
-      if (req.params.todo_id) {
+      if (req.body.userId) {
         const todo = await todo_Model.findById({ _id: req.params.todo_id });
         if (todo.userId == req.body.userId) {
           res.json(todo);
@@ -80,7 +84,7 @@ const todoController = {
             _id: req.params.todo_id,
           });
           res.json({
-            message: "you have removed successfully",
+            message: "you have removed successfully " + removed_Todo,
           });
         } else {
           next(ApiError.badRequest(notAllowedNotification));
