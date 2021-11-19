@@ -81,11 +81,11 @@ const todoController = {
       if (req.body.userId) {
         const todo = await todo_Model.findById({ _id: req.params.todo_id });
         if (todo.userId == req.body.userId) {
-          const removed_Todo = await todo_Model.remove({
+          await todo_Model.remove({
             _id: req.params.todo_id,
           });
           res.json({
-            message: "you have removed successfully " + removed_Todo,
+            message: "you have removed successfully ",
           });
         } else {
           next(ApiError.badRequest(notAllowedNotification));

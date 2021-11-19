@@ -21,13 +21,15 @@ const userController = {
           .catch((err) => {
             next(
               ApiError.badRequest(
-                "signup fail because userName or email were used" + err
+                "signup fail because userName or email were used"
               )
             );
           });
       })
       .catch((err) => {
-        next({});
+        next(
+          ApiError.badRequest("userName, email or password was not provided")
+        );
       });
   },
   login: (req, res, next) => {
@@ -37,18 +39,16 @@ const userController = {
         //check password
         bcrypt.compare(req.body.password, user.password).then((result) => {
           if (result) {
-            const token = jwt.sign(
-              { email: user.email, userName: user.userName, id: user._id },
-              "PRIVATEKEY",
-              { expiresIn: "1h" }
-            );
+            const token = jwt.sign({ id: user._id }, "PRIVATEKEY", {
+              expiresIn: "1h",
+            });
+            res.cookie("jwt", token, { httpOnly: true, expiresIn: "1h" });
             res.status(200).json({
               message: "login successfully",
               userInfo: {
                 userName: user.userName,
                 email: user.userEmail,
               },
-              token: token,
             });
           } else {
             next(
@@ -67,10 +67,9 @@ const userController = {
   },
   logout: (req, res, next) => {
     if (req.body.userId) {
-      const token = jwt.sign("PRIVATEKEY", { expiresIn: 1 });
+      res.cookie("jwt", "", { httpOnly: true, maxAge: 1 });
       res.status(200).json({
         message: "logout successfully. To see your content please login again",
-        token,
       });
     } else {
       next(ApiError.badRequest("you're  not login so cannot log out"));

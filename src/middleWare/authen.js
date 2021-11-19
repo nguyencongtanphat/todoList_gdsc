@@ -1,8 +1,11 @@
 const jwt = require("jsonwebtoken");
+const { response } = require("../../app");
 const authen = (req, res, next) => {
   try {
-    if (req.headers.authorization) {
-      const decoded = jwt.verify(req.headers.authorization, "PRIVATEKEY");
+    if (req.cookies.jwt) {
+      console.log("have cookies");
+      const token = req.cookies.jwt;
+      const decoded = jwt.verify(token, "PRIVATEKEY");
       req.body.userId = decoded.id;
     }
     next();
