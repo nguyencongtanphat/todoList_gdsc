@@ -5,7 +5,7 @@ const ApiError = require("../middleWare/error/ApiError");
 const userController = {
   signup: (req, res, next) => {
     bcrypt
-      .hash(req.body.password, process.env.SALT_ROUNDS)
+      .hash(req.body.password, Number(process.env.SALT_ROUNDS))
       .then((hash) => {
         const newUser = new UserModel({
           userName: req.body.userName,
@@ -20,14 +20,16 @@ const userController = {
           .catch((err) => {
             next(
               ApiError.badRequest(
-                "signup fail because userName or email were used"
+                "signup fail because userName or email were used" + err
               )
             );
           });
       })
       .catch((err) => {
         next(
-          ApiError.badRequest("userName, email or password was not provided")
+          ApiError.badRequest(
+            "userName, email or password was not provided" + err
+          )
         );
       });
   },
