@@ -20,16 +20,14 @@ const userController = {
           .catch((err) => {
             next(
               ApiError.badRequest(
-                "signup fail because userName or email were used" + err
+                "signup fail because userName or email were used"
               )
             );
           });
       })
       .catch((err) => {
         next(
-          ApiError.badRequest(
-            "userName, email or password was not provided" + err
-          )
+          ApiError.badRequest("userName, email or password was not provided")
         );
       });
   },
@@ -43,7 +41,7 @@ const userController = {
             const token = jwt.sign({ id: user._id }, process.env.PRIVATE_KEY, {
               expiresIn: "1h",
             });
-            res.cookie("jwt", token, { httpOnly: true, maxAge: "1h" });
+            res.cookie("jwt", token, { httpOnly: true, maxAge: 3600 });
             res.status(200).json({
               message: "login successfully",
               userInfo: {
